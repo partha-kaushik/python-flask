@@ -1,0 +1,36 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyuserapi-deployment
+  labels:
+    app: pyuserapi
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pyuserapi
+  template:
+    metadata:
+      labels:
+        app: pyuserapi
+    spec:
+      containers:
+        - name: pyuserapi
+          image: parthakaushik/pyuserapi:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: db_username
+              valueFrom:
+                secretKeyRef:
+                  name: pyuserapi-secrets
+                  key: db_root_user
+            - name: db_password
+              valueFrom:
+                secretKeyRef:
+                  name: pyuserapi-secrets
+                  key: db_root_password
+            - name: db_name
+              value: pyuserapi_demo

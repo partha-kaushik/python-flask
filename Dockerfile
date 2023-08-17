@@ -1,6 +1,8 @@
 FROM python:3.6-slim
 ARG MYSQL_PORT
 ENV MYSQL_SERVICE_PORT=$MYSQL_PORT
+ARG DB_NAME="userapi_db"
+ENV db_name=$DB_NAME
 
 RUN apt-get clean \
     && apt-get -y update
